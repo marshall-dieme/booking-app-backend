@@ -1,0 +1,66 @@
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:8888
+
+server:
+  port: 8765
+
+---
+spring:
+  cloud:
+    gateway:
+      # default-filters:
+      #   - TokenRelay
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: airline-service
+        uri: lb://airline-service
+        predicates:
+        - Path=/airlines/**
+        # filters:
+        # - RemoveRequestHeader=Cookie
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+---
+# spring:
+#   security:
+#     oauth2:
+#       client:
+#         provider:
+#           keycloak:
+#             token-uri: http://localhost:8080/auth/realms/master/protocol/openid-connect/token
+#             authorization-uri: http://localhost:8080/auth/realms/master/protocol/openid-connect/auth
+#             user-info-uri: http://localhost:8080/auth/realms/master/protocol/openid-connect/userinfo
+#             user-name-attribute: preferred_username
+#         registration:
+#           keycloak-with-test-scope:
+#             provider: keycloak
+#             client-id: spring-with-test-scope
+#             client-secret: WW9da8hrdUZeuRiCC5b4mofSCz8843aE
+#             authorization-grant-type: authorization_code
+#             redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+#           keycloak-without-test-scope:
+#             provider: keycloak
+#             client-id: spring-without-test-scope
+#             client-secret: XYtYsDEXZI0CDHeKSYtSAIzQr7ZTHem0
+#             authorization-grant-type: authorization_code
+#             redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+            
+
