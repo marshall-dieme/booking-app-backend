@@ -7,7 +7,6 @@ import com.spring.airportservice.model.Airport;
 import com.spring.airportservice.service.AirportService;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
