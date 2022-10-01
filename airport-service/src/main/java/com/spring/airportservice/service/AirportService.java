@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.spring.airportservice.repository.AirportRepo;
 
 @Service
 @Transactional
+@Slf4j
 public class AirportService {
     private final AirportRepo repo;
 
@@ -26,7 +28,13 @@ public class AirportService {
     }
 
     public Airport getAirport(String name) {
-        return repo.findByAirportName(name);
+        //try to find airport by name or else log airport name not found
+        try {
+            return repo.findByAirportName(name);
+        } catch (Exception e) {
+            log.error("Airport {} not found", name);
+            return null;
+        }
     }
 
     public Airport createAirport(Airport airport) {
@@ -40,4 +48,5 @@ public class AirportService {
     public void delete(String name) {
         repo.deleteByAirportName(name);
     }
+
 }
