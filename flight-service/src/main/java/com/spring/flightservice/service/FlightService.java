@@ -117,19 +117,18 @@ public class FlightService {
         }
     }
 
-    //generate flightNumber with 10 chars
-    public String generateFlightNumber() {
-        //log generating flightNumber
-        log.info("Generating flightNumber");
-        //generate flightNumber with 10 chars
-        String flightNumber = "";
-        for (int i = 0; i < 10; i++) {
-            flightNumber += (char) (Math.random() * 26 + 'A');
+    //generate flight number
+    private String generateFlightNumber() {
+        //generate a random flight number
+        String flightNumber = "FL" + (int) (Math.random() * 1000000);
+        //check if the flight number already exists in the database
+        //if it does, generate a new flight number
+        //else return the flight number
+        if (flightRepo.existsByFlightNumber(flightNumber)) {
+            return generateFlightNumber();
+        } else {
+            return flightNumber;
         }
-        //log generated flightNumber
-        log.info("Generated flightNumber: " + flightNumber);
-        //return generated flightNumber
-        return flightNumber;
     }
     
 }

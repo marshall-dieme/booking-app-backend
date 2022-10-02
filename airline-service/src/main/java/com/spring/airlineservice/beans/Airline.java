@@ -9,6 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +25,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Airline {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID airlineNo;
 
     @NotBlank
@@ -39,4 +42,18 @@ public class Airline {
     @Size(max = 10)
     @Column(unique = true, length = 10)
     private String iata;
+
+    @NotBlank
+    @NotNull
+    @NotEmpty
+    @Size(max = 10)
+    @Column(unique = true, length = 10)
+    private String icao;
+
+    @NotBlank
+    @NotNull
+    @NotEmpty
+    private String country;
+
+
 }

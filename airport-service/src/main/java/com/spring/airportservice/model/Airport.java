@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,22 +29,48 @@ public class Airport {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(unique = true)
-    @Size(min = 10)
-    @NotNull
     @NotBlank
-    private String airportName;
+    @NotNull
+    @NotEmpty
+    private String name;
 
-    @Column(unique = true)
-    @NotNull
     @NotBlank
+    @NotNull
+    @NotEmpty
+    @Size(max = 10)
+    @Column(unique = true, length = 10)
     private String iata;
 
-    @NotNull
     @NotBlank
+    @NotNull
+    @NotEmpty
+    @Size(max = 10)
+    @Column(unique = true, length = 10)
+    private String icao;
+
+    @NotBlank
+    @NotNull
+    @NotEmpty
+    private String city;
+
+    @NotBlank
+    @NotNull
+    @NotEmpty
     private String country;
 
-    @NotNull
     @NotBlank
-    private String city;
+    @NotNull
+    @NotEmpty
+    private String timezone;
+
+    @NotBlank
+    @NotNull
+    @NotEmpty
+    private String latitude;
+
+    @NotBlank
+    @NotNull
+    @NotEmpty
+    private String longitude;
+
 }

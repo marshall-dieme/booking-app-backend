@@ -43,11 +43,11 @@ public class AirlineService {
         return airline;
     }
 
-    public List<Airline> getAirlines(int page, int pageSize) {
+    public List<Airline> getAirlines(int page) {
         log.info("**********ENTERING GET AIRLINES SERVICE**********");
         List<Airline> airlines = null;
         try {
-            Pageable pageRequest = PageRequest.of(page, pageSize);
+            Pageable pageRequest = PageRequest.of(page, 10);
             airlines = repo.findAll(pageRequest).getContent();
         }
         catch (Exception err) {
@@ -56,24 +56,41 @@ public class AirlineService {
         return airlines;
     }
 
-    public Airline createOrUpdate(Airline airline) {
-        log.info("**********ENTERING CREATE/UPDATE SERVICE**********");
-        Airline rln = null;
+    //create a new airline
+    public Airline createAirline(Airline airline) {
+        log.info("**********ENTERING CREATE AIRLINE SERVICE**********");
+        Airline newAirline = null;
         try {
-            rln = repo.save(airline);
-        } catch (Exception e) {
-            log.error("Could not create or update : {}", e.getMessage());
+            newAirline = repo.save(airline);
+        } catch (Exception err) {
+            log.error("An error occur : {}", err.getMessage());
         }
-        return rln;
+        log.info("**********LEAVING CREATE AIRLINE SERVICE**********");
+        return newAirline;
+    }
+    
+    //update an airline
+    public Airline updateAirline(Airline airline) {
+        log.info("**********ENTERING UPDATE AIRLINE SERVICE**********");
+        Airline updatedAirline = null;
+        try {
+            updatedAirline = repo.save(airline);
+        } catch (Exception err) {
+            log.error("An error occur : {}", err.getMessage());
+        }
+        log.info("**********LEAVING UPDATE AIRLINE SERVICE**********");
+        return updatedAirline;
     }
 
-    public void deleteByName(String airlineName) {
-        log.info("**********ENTERING CREATE/UPDATE SERVICE**********");
+    //delete airline by name
+    public void deleteAirline(String airlineName) {
+        log.info("**********ENTERING DELETE AIRLINE SERVICE**********");
         try {
             repo.deleteByAirlineName(airlineName);
-        } catch (Exception e) {
-            log.error("Could not delete airline '{}' : {}",airlineName, e.getMessage());
+        } catch (Exception err) {
+            log.error("An error occur : {}", err.getMessage());
         }
+        log.info("**********LEAVING DELETE AIRLINE SERVICE**********");
     }
 
 }
