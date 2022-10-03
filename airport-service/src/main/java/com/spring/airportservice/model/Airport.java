@@ -63,14 +63,4 @@ public class Airport {
     @NotEmpty
     private String timezone;
 
-    @NotBlank
-    @NotNull
-    @NotEmpty
-    private String latitude;
-
-    @NotBlank
-    @NotNull
-    @NotEmpty
-    private String longitude;
-
 }
